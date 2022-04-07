@@ -1,8 +1,8 @@
 from django.db import models
 import datetime
 class Farmacia(models.Model):
-    name = models.CharField(max_length=60)
-    razao_sicial = models.CharField(max_length=60)
+    nome = models.CharField(max_length=60)
+    razao_social = models.CharField(max_length=60)
     cnpj = models.CharField(max_length=18)
     whatsapp = models.CharField(max_length=14)
     telefone = models.CharField(max_length=13)
@@ -11,7 +11,7 @@ class Farmacia(models.Model):
     url_image = models.URLField()
 
     def __str__(self):
-        return self.name
+        return self.nome
 
 
 class EscalaPlantao(models.Model):
@@ -20,7 +20,7 @@ class EscalaPlantao(models.Model):
     dia_hora_fechamento = models.DateTimeField()
 
     def __str__(self):
-        return self.dia_hora_inicio
+        return f'{self.dia_hora_inicio}'
 
 
 class DiasHorarioFuncionamento(models.Model):

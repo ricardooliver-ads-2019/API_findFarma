@@ -9,7 +9,7 @@ class DiasHorarioFuncionamentoAdmin(admin.ModelAdmin):
 
 @admin.register(Farmacia)
 class FarmaciasAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name','razao_sicial','telefone','email','plantonista', 'cnpj', 'whatsapp','url_image')
+    list_display = ('id', 'nome','razao_social','telefone','email','plantonista', 'cnpj', 'whatsapp','url_image')
 
 @admin.register(EscalaPlantao)
 class EscalaPlantaoAdmin(admin.ModelAdmin):
