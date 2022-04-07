@@ -15,13 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from encontraFarma.views import FarmaciasViewSet
-from rest_framework import routers
-
-router = routers.DefaultRouter()
-router.register('farmacias', FarmaciasViewSet)
+from encontraFarma.urls import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path("auth/", include("rest_framework.urls")),
+    path('api/v1/', include(router.urls)),
 ]
