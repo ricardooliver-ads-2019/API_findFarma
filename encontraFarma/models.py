@@ -1,44 +1,47 @@
 from django.db import models
 import datetime
+
+# class EscalaPlantao(models.Model):
+#     farmacia = models.ForeignKey(Farmacia, related_name='escalaPlantao', on_delete=models.CASCADE)
+#     dia_hora_inicio = models.DateTimeField()
+#     dia_hora_fechamento = models.DateTimeField()
+
+#     def __str__(self):
+#         return f'{self.dia_hora_inicio}'
+
+class HorarioSemanal(models.Model):
+
+    segundaHorarioAbertura = models.TimeField(null=True, blank=True)
+    segundaHorarioFechamento = models.TimeField(null=True, blank=True)
+    tercaHorarioAbertura = models.TimeField(null=True, blank=True)
+    tercaHorarioFechamento = models.TimeField(null=True, blank=True)
+    quartaHorarioAbertura = models.TimeField(null=True, blank=True)
+    quartaHorarioFechamento = models.TimeField(null=True, blank=True)
+    quintaHorarioAbertura = models.TimeField(null=True, blank=True)
+    quintaHorarioFechamento = models.TimeField(null=True, blank=True)
+    sextaHorarioAbertura = models.TimeField(null=True, blank=True)
+    sextaHorarioFechamento = models.TimeField(null=True, blank=True)
+    sabadoHorarioAbertura = models.TimeField(null=True, blank=True)
+    sabadoHorarioFechamento = models.TimeField(null=True, blank=True)
+    domingoHorarioAbertura = models.TimeField(null=True, blank=True)
+    domingoHorarioFechamento = models.TimeField(null=True, blank=True)
+    
+    def __str__(self):
+        return f'Horário Semanal {self.id}' 
+
+
 class Farmacia(models.Model):
     nome = models.CharField(max_length=60)
-    razao_social = models.CharField(max_length=60)
-    cnpj = models.CharField(max_length=18)
-    whatsapp = models.CharField(max_length=14)
-    telefone = models.CharField(max_length=13)
-    email = models.EmailField()
+    razao_social = models.CharField(max_length=60, unique=True)
+    cnpj = models.CharField(max_length=18, unique=True)
+    whatsapp = models.CharField(max_length=14, unique=True)
+    telefone = models.CharField(max_length=13, unique=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
     plantonista = models.BooleanField()
-    url_image = models.URLField()
+    url_image = models.URLField(null=True, blank=True)
+    responsavel = models.CharField(max_length=60, null=True, blank=True)
+
+    horarioSemanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
-
-
-class EscalaPlantao(models.Model):
-    farmacia = models.ForeignKey(Farmacia, related_name='escalaPlantao', on_delete=models.CASCADE)
-    dia_hora_inicio = models.DateTimeField()
-    dia_hora_fechamento = models.DateTimeField()
-
-    def __str__(self):
-        return f'{self.dia_hora_inicio}'
-
-
-class DiasHorarioFuncionamento(models.Model):
-    DIAS_SEMANAS_CHOICES = (
-        ("SEG", 'SEGUNDA-FEIRA'),
-        ("TER", 'TERÇA-FEIRA'),
-        ("QUA", 'QUARTA-FEIRA'),
-        ("QUI", 'QUINTA-FEIRA'),
-        ("FEI", 'FEIRA-FEIRA'),
-        ("SAB", 'SABADO-FEIRA'),
-        ("DOM", 'DOMINGO-FEIRA'),
-    )
-
-    farmacia = models.ForeignKey(Farmacia,  related_name='diasHorarioFuncionamento', on_delete=models.CASCADE)
-
-    dia_semana = models.CharField(choices=DIAS_SEMANAS_CHOICES, blank=False, null=False,max_length=3, unique=True)
-    hora_inicio = models.TimeField()
-    hora_fechamento = models.TimeField()
-
-    def __str__(self):
-        return self.dia_semana
