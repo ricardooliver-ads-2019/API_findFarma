@@ -1,13 +1,4 @@
 from django.db import models
-import datetime
-
-# class EscalaPlantao(models.Model):
-#     farmacia = models.ForeignKey(Farmacia, related_name='escalaPlantao', on_delete=models.CASCADE)
-#     dia_hora_inicio = models.DateTimeField()
-#     dia_hora_fechamento = models.DateTimeField()
-
-#     def __str__(self):
-#         return f'{self.dia_hora_inicio}'
 
 class HorarioSemanal(models.Model):
 
@@ -27,8 +18,10 @@ class HorarioSemanal(models.Model):
     domingoHorarioFechamento = models.TimeField(null=True, blank=True)
     
     def __str__(self):
-        return f'Horário Semanal {self.id}' 
-
+        if hasattr(self, "farmacia"):                 
+            return f'{self.farmacia}' 
+        return f'{self.pk}'
+           
 
 class Farmacia(models.Model):
     nome = models.CharField(max_length=60)
@@ -36,12 +29,12 @@ class Farmacia(models.Model):
     cnpj = models.CharField(max_length=18, unique=True)
     whatsapp = models.CharField(max_length=14, unique=True)
     telefone = models.CharField(max_length=13, unique=True)
-    email = models.EmailField(unique=True, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True, unique=True)
     plantonista = models.BooleanField()
-    url_image = models.URLField(null=True, blank=True)
-    responsavel = models.CharField(max_length=60, null=True, blank=True)
+    url_image = models.URLField(null=True, blank=True, unique=True)
+    responsavel = models.CharField(max_length=60, null=True, blank=True)    
 
-    horarioSemanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE)
+    horarioSemanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE, related_name="farmacia")
 
     def __str__(self):
         return self.nome

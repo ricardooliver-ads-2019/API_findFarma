@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import Farmacia, HorarioSemanal#, EscalaPlantao
+from .models import Farmacia, HorarioSemanal
 
 class HorarioSemanalSerializer(serializers.ModelSerializer):
+    
+    farmacia = serializers.StringRelatedField()
+
     class Meta:
         model = HorarioSemanal
         fields = (
@@ -19,12 +22,14 @@ class HorarioSemanalSerializer(serializers.ModelSerializer):
             'sabadoHorarioAbertura',
             'sabadoHorarioFechamento',
             'domingoHorarioAbertura',
-            'domingoHorarioFechamento'
+            'domingoHorarioFechamento',
+            'farmacia'
         )
 
-class FarmaciaSerializer(serializers.ModelSerializer):
 
-    horarioSemanal = HorarioSemanalSerializer(many=True, read_only=True)
+class FarmaciaSerializer(serializers.ModelSerializer):   
+
+    horarioSemanal = HorarioSemanalSerializer()
 
     class Meta:
         model = Farmacia
@@ -32,18 +37,11 @@ class FarmaciaSerializer(serializers.ModelSerializer):
             'id', 
             'nome', 
             'razao_social', 
-            'cnpj', 'whatsapp', 
+            'cnpj', 
+            'whatsapp', 
             'telefone', 
             'email', 
             'plantonista', 
             'url_image', 
-            'horarioSemanal'
+            'horarioSemanal'            
         )
-
-# class EscalaPlantaoSerializer(serializers.ModelSerializer):
-    
-#     farmacia = FarmaciaSerializer(many=True, read_only=True)
-    
-#     class Meta:
-#         model = EscalaPlantao
-#         fields = ['id', 'dia_hora_inicio', 'dia_hora_fechamento', 'farmacia']
