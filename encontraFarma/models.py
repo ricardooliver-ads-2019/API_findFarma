@@ -51,29 +51,8 @@ class Farmacia(models.Model):
     def busca_farmacias_abertas():
         nome_dia_semana = datetime.now().strftime("%A")
         hora_atual = datetime.now().strftime("%X")
-        
-        query = ""
-        if nome_dia_semana == DOMINGO:            
-            query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= domingoHorarioAbertura AND "{hora_atual}" <= domingoHorarioFechamento'
-        
-        elif nome_dia_semana == SEGUNDA:
-            query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= segundaHorarioAbertura AND "{hora_atual}" <= segundaHorarioFechamento'
-        
-        elif nome_dia_semana == TERCA:
-            query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= tercaHorarioAbertura AND "{hora_atual}" <= tercaHorarioFechamento'
-        
-        elif nome_dia_semana == QUARTA:
-            query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quartaHorarioAbertura AND "{hora_atual}" <= quartaHorarioFechamento'
-        
-        elif nome_dia_semana == QUINTA:
-            query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quintaHorarioAbertura AND "{hora_atual}" <= quintaHorarioFechamento'
-        
-        elif nome_dia_semana == SEXTA:
-            query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sextaHorarioAbertura AND "{hora_atual}" <= sextaHorarioFechamento'
-        
-        elif nome_dia_semana == SABADO:
-            query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sabadoHorarioAbertura AND "{hora_atual}" <= sabadoHorarioFechamento'
-
+                
+        query = retorna_query_busca_farmacia_dia_semana(nome_dia_semana, hora_atual)
         farmacias = HorarioSemanal.objects.raw(query)
         
         lista_de_farmacias = []
@@ -81,4 +60,35 @@ class Farmacia(models.Model):
             lista_de_farmacias.append(f.farmacia)
 
         return lista_de_farmacias
+
     
+def retorna_query_busca_farmacia_dia_semana(nome_dia_semana, hora_atual):
+    
+    query = ""
+    if nome_dia_semana == DOMINGO:            
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= domingoHorarioAbertura AND "{hora_atual}" <= domingoHorarioFechamento'
+        return query
+    
+    if nome_dia_semana == SEGUNDA:
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= segundaHorarioAbertura AND "{hora_atual}" <= segundaHorarioFechamento'
+        return query
+    
+    if nome_dia_semana == TERCA:
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= tercaHorarioAbertura AND "{hora_atual}" <= tercaHorarioFechamento'
+        return query
+    
+    if nome_dia_semana == QUARTA:
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quartaHorarioAbertura AND "{hora_atual}" <= quartaHorarioFechamento'
+        return query
+    
+    if nome_dia_semana == QUINTA:
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quintaHorarioAbertura AND "{hora_atual}" <= quintaHorarioFechamento'
+        return query
+    
+    if nome_dia_semana == SEXTA:
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sextaHorarioAbertura AND "{hora_atual}" <= sextaHorarioFechamento'
+        return query
+    
+    if nome_dia_semana == SABADO:
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sabadoHorarioAbertura AND "{hora_atual}" <= sabadoHorarioFechamento'
+        return query

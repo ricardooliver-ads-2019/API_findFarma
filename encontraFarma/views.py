@@ -1,10 +1,14 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from encontraFarma.models import Farmacia, HorarioSemanal
+from encontraFarma.models import Farmacia
 from .serializer import FarmaciaSerializer
 
 class FarmaciasViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Farmacia.objects.all()
+    serializer_class = FarmaciaSerializer
+
+class FarmaciasAbertasViewSet(viewsets.ReadOnlyModelViewSet):    
     queryset = Farmacia.objects.all()
     serializer_class = FarmaciaSerializer
     
@@ -12,4 +16,4 @@ class FarmaciasViewSet(viewsets.ReadOnlyModelViewSet):
         lista_de_farmacias = Farmacia.busca_farmacias_abertas()        
 
         serializer = self.get_serializer(lista_de_farmacias, many=True)
-        return Response(serializer.data)        
+        return Response(serializer.data)      
