@@ -52,8 +52,6 @@ class Farmacia(models.Model):
         nome_dia_semana = datetime.now().strftime("%A")
         hora_atual = datetime.now().strftime("%X")
         
-        print(hora_atual)
-
         query = ""
         if nome_dia_semana == DOMINGO:            
             query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= domingoHorarioAbertura AND "{hora_atual}" <= domingoHorarioFechamento'
