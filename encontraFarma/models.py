@@ -11,20 +11,20 @@ DOMINGO = "Sunday"
 
 class HorarioSemanal(models.Model):
 
-    segundaHorarioAbertura = models.TimeField(null=True, blank=True)
-    segundaHorarioFechamento = models.TimeField(null=True, blank=True)
-    tercaHorarioAbertura = models.TimeField(null=True, blank=True)
-    tercaHorarioFechamento = models.TimeField(null=True, blank=True)
-    quartaHorarioAbertura = models.TimeField(null=True, blank=True)
-    quartaHorarioFechamento = models.TimeField(null=True, blank=True)
-    quintaHorarioAbertura = models.TimeField(null=True, blank=True)
-    quintaHorarioFechamento = models.TimeField(null=True, blank=True)
-    sextaHorarioAbertura = models.TimeField(null=True, blank=True)
-    sextaHorarioFechamento = models.TimeField(null=True, blank=True)
-    sabadoHorarioAbertura = models.TimeField(null=True, blank=True)
-    sabadoHorarioFechamento = models.TimeField(null=True, blank=True)
-    domingoHorarioAbertura = models.TimeField(null=True, blank=True)
-    domingoHorarioFechamento = models.TimeField(null=True, blank=True)
+    segunda_horario_abertura = models.TimeField(null=True, blank=True)
+    segunda_horario_fechamento = models.TimeField(null=True, blank=True)
+    terca_horario_abertura = models.TimeField(null=True, blank=True)
+    terca_horario_fechamento = models.TimeField(null=True, blank=True)
+    quarta_horario_abertura = models.TimeField(null=True, blank=True)
+    quarta_horario_fechamento = models.TimeField(null=True, blank=True)
+    quinta_horario_abertura = models.TimeField(null=True, blank=True)
+    quinta_horario_fechamento = models.TimeField(null=True, blank=True)
+    sexta_horario_abertura = models.TimeField(null=True, blank=True)
+    sexta_horario_fechamento = models.TimeField(null=True, blank=True)
+    sabado_horario_abertura = models.TimeField(null=True, blank=True)
+    sabado_horario_fechamento = models.TimeField(null=True, blank=True)
+    domingo_horario_abertura = models.TimeField(null=True, blank=True)
+    domingo_horario_fechamento = models.TimeField(null=True, blank=True)
     
     def __str__(self):
         if hasattr(self, "farmacia"):                 
@@ -43,7 +43,7 @@ class Farmacia(models.Model):
     url_image = models.URLField(null=True, blank=True, unique=True)
     responsavel = models.CharField(max_length=60, null=True, blank=True)    
 
-    horarioSemanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE, related_name="farmacia")
+    horario_semanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE, related_name="farmacia")
 
     def __str__(self):
         return self.nome
@@ -66,29 +66,52 @@ def retorna_query_busca_farmacia_dia_semana(nome_dia_semana, hora_atual):
     
     query = ""
     if nome_dia_semana == DOMINGO:            
-        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= domingoHorarioAbertura AND "{hora_atual}" <= domingoHorarioFechamento'
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= domingo_horario_abertura AND "{hora_atual}" <= domingo_horario_fechamento'
         return query
     
     if nome_dia_semana == SEGUNDA:
-        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= segundaHorarioAbertura AND "{hora_atual}" <= segundaHorarioFechamento'
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= segunda_horario_abertura AND "{hora_atual}" <= segunda_horario_fechamento'
         return query
     
     if nome_dia_semana == TERCA:
-        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= tercaHorarioAbertura AND "{hora_atual}" <= tercaHorarioFechamento'
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= terca_horario_abertura AND "{hora_atual}" <= terca_horario_fechamento'
         return query
     
     if nome_dia_semana == QUARTA:
-        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quartaHorarioAbertura AND "{hora_atual}" <= quartaHorarioFechamento'
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quarta_horario_abertura AND "{hora_atual}" <= quarta_horario_fechamento'
         return query
     
     if nome_dia_semana == QUINTA:
-        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quintaHorarioAbertura AND "{hora_atual}" <= quintaHorarioFechamento'
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= quinta_horario_abertura AND "{hora_atual}" <= quinta_horario_fechamento'
         return query
     
     if nome_dia_semana == SEXTA:
-        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sextaHorarioAbertura AND "{hora_atual}" <= sextaHorarioFechamento'
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sexta_horario_abertura AND "{hora_atual}" <= sexta_horario_fechamento'
         return query
     
     if nome_dia_semana == SABADO:
-        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sabadoHorarioAbertura AND "{hora_atual}" <= sabadoHorarioFechamento'
+        query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sabado_horario_abertura AND "{hora_atual}" <= sabado_horario_fechamento'
         return query
+
+
+class EscalaPlantao(models.Model):
+    data_hora_inicio_plantao = models.DateTimeField()
+    data_hora_final_plantao = models.DateTimeField()
+    
+    farmacia = models.ManyToManyField(Farmacia)
+    
+    def __str__(self):        
+        return f'{self.pk}'
+
+    def busca_farmacias_plantao_hoje():
+        data_hora_atual = datetime.now().strftime("%G-%m-%d %X")
+        
+        query = f'SELECT * FROM encontraFarma_escalaplantao WHERE "{data_hora_atual}" >= data_hora_inicio_plantao AND "{data_hora_atual}" <= data_hora_final_plantao'
+        
+        farmacias = HorarioSemanal.objects.raw(query)
+        
+        lista_de_farmacias = []
+        for f in farmacias:
+            lista_de_farmacias.append(f.farmacia)
+
+        return lista_de_farmacias
