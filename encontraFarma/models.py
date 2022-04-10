@@ -32,6 +32,27 @@ class HorarioSemanal(models.Model):
         return f'{self.pk}'
            
 
+class EscalaPlantao(models.Model):
+    data_hora_inicio_plantao = models.DateTimeField()
+    data_hora_final_plantao = models.DateTimeField()
+       
+    def __str__(self):         
+        return f'{self.data_hora_inicio_plantao} :: {self.data_hora_final_plantao}'        
+
+    def busca_farmacias_plantao_hoje():
+        data_hora_atual = datetime.now().strftime("%G-%m-%d %X")
+        
+        query = f'SELECT * FROM encontraFarma_escalaplantao WHERE "{data_hora_atual}" >= data_hora_inicio_plantao AND "{data_hora_atual}" <= data_hora_final_plantao'
+        
+        farmacias = HorarioSemanal.objects.raw(query)
+        
+        lista_de_farmacias = []
+        for f in farmacias:
+            lista_de_farmacias.append(f.farmacia)
+
+        return lista_de_farmacias
+
+
 class Farmacia(models.Model):
     nome = models.CharField(max_length=60)
     razao_social = models.CharField(max_length=60, unique=True)
@@ -44,6 +65,7 @@ class Farmacia(models.Model):
     responsavel = models.CharField(max_length=60, null=True, blank=True)    
 
     horario_semanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE, related_name="farmacia")
+    escala_plantao = models.ManyToManyField(EscalaPlantao)
 
     def __str__(self):
         return self.nome
@@ -92,26 +114,3 @@ def retorna_query_busca_farmacia_dia_semana(nome_dia_semana, hora_atual):
     if nome_dia_semana == SABADO:
         query = f'SELECT * FROM encontraFarma_horariosemanal WHERE "{hora_atual}" >= sabado_horario_abertura AND "{hora_atual}" <= sabado_horario_fechamento'
         return query
-
-
-class EscalaPlantao(models.Model):
-    data_hora_inicio_plantao = models.DateTimeField()
-    data_hora_final_plantao = models.DateTimeField()
-    
-    farmacia = models.ManyToManyField(Farmacia)
-    
-    def __str__(self):        
-        return f'{self.pk}'
-
-    def busca_farmacias_plantao_hoje():
-        data_hora_atual = datetime.now().strftime("%G-%m-%d %X")
-        
-        query = f'SELECT * FROM encontraFarma_escalaplantao WHERE "{data_hora_atual}" >= data_hora_inicio_plantao AND "{data_hora_atual}" <= data_hora_final_plantao'
-        
-        farmacias = HorarioSemanal.objects.raw(query)
-        
-        lista_de_farmacias = []
-        for f in farmacias:
-            lista_de_farmacias.append(f.farmacia)
-
-        return lista_de_farmacias

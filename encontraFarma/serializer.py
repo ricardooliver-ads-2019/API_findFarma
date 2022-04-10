@@ -53,14 +53,16 @@ class EscalaPlantaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = EscalaPlantao
         fields = (
-            'id'
-            'data_hora_inicio_plantao'
-            'data_hora_final_plantao'  
+            'id',
+            'data_hora_inicio_plantao',
+            'data_hora_final_plantao' 
         )
 
 
 
 class FarmaciaPlatonistaSerializer(serializers.ModelSerializer):   
+
+    escala_plantao = EscalaPlantaoSerializer(many=True)
 
     class Meta:
         model = Farmacia
@@ -73,5 +75,6 @@ class FarmaciaPlatonistaSerializer(serializers.ModelSerializer):
             'telefone', 
             'email', 
             'plantonista', 
-            'url_image'                    
+            'url_image',
+            'escala_plantao'                    
         )        
