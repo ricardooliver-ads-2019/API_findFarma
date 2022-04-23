@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from .forms import PessoaFormAdmin
 from .models import Farmacia, HorarioSemanal, EscalaPlantao
 
 
@@ -10,6 +12,11 @@ class HorariosSemanalAdmin(admin.ModelAdmin):
 
 @admin.register(Farmacia)
 class FarmaciasAdmin(admin.ModelAdmin):
+    form = PessoaFormAdmin
+
+    class Media:
+        js = ("jquery.mask.min.js", "custom.js")
+
     list_display = (
         'id',
         'nome',

@@ -1,3 +1,5 @@
+import numbers
+
 from django.db import models
 from datetime import datetime
 
@@ -56,16 +58,22 @@ class EscalaPlantao(models.Model):
 class Farmacia(models.Model):
     nome = models.CharField(max_length=60)
     razao_social = models.CharField(max_length=60, unique=True)
-    cnpj = models.CharField(max_length=18, unique=True)
-    whatsapp = models.CharField(max_length=14, unique=True)
-    telefone = models.CharField(max_length=13, unique=True)
+    cnpj = models.CharField(max_length=14, unique=True)
+    whatsapp = models.CharField(max_length=11, unique=True)
+    telefone = models.CharField(max_length=11, unique=True)
     email = models.EmailField(null=True, blank=True, unique=True)
+    cep = models.CharField(max_length=8, null=True, blank=True,)
+    rua = models.CharField(max_length=60, null=True, blank=True,)
+    numero = models.IntegerField(default=0, null=True, blank=True,)
+    bairro = models.CharField(max_length=60, null=True, blank=True,)
+    cidade = models.CharField(max_length=60, null=True, blank=True,)
+    uf = models.CharField(max_length=2, null=True, blank=True,)
     plantonista = models.BooleanField()
     url_image = models.URLField(null=True, blank=True, unique=True)
-    responsavel = models.CharField(max_length=60, null=True, blank=True)    
-
+    responsavel = models.CharField(max_length=60, null=True, blank=True)
+    cpf_responsavel = models.CharField(max_length=11, null=True, blank=True)
     horario_semanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE, related_name="farmacia")
-    escala_plantao = models.ManyToManyField(EscalaPlantao)
+    escala_plantao = models.ManyToManyField(EscalaPlantao, null=True, blank=True)
 
     def __str__(self):
         return self.nome

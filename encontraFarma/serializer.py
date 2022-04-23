@@ -43,8 +43,14 @@ class FarmaciaSerializer(serializers.ModelSerializer):
             'telefone', 
             'email', 
             'plantonista', 
-            'url_image', 
-            'horario_semanal'            
+            'url_image',
+            'cep',
+            'rua',
+            'numero',
+            'bairro',
+            'cidade',
+            'uf',
+            'horario_semanal',
         )
 
 
@@ -76,5 +82,11 @@ class FarmaciaPlatonistaSerializer(serializers.ModelSerializer):
             'email', 
             'plantonista', 
             'url_image',
+            'cep',
+            'rua',
+            'numero',
+            'bairro',
+            'cidade',
+            'uf',
             'escala_plantao'                    
         )        
