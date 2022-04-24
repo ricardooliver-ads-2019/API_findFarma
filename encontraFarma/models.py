@@ -1,5 +1,3 @@
-import numbers
-
 from django.db import models
 from datetime import datetime
 
@@ -54,6 +52,17 @@ class EscalaPlantao(models.Model):
 
         return lista_de_farmacias
 
+    def busca_farmacias_plantao_por_data_recebida(data_recebida):        
+        query = f'SELECT * FROM encontraFarma_escalaplantao WHERE "{data_recebida}" >= DATE(data_hora_inicio_plantao) AND "{data_recebida}" <= DATE(data_hora_final_plantao)'
+     
+        farmacias = HorarioSemanal.objects.raw(query)
+        
+        lista_de_farmacias = []
+        for f in farmacias:
+            lista_de_farmacias.append(f.farmacia)
+
+        return lista_de_farmacias
+
 
 class Farmacia(models.Model):
     nome = models.CharField(max_length=60)
@@ -73,7 +82,7 @@ class Farmacia(models.Model):
     responsavel = models.CharField(max_length=60, null=True, blank=True)
     cpf_responsavel = models.CharField(max_length=11, null=True, blank=True)
     horario_semanal = models.OneToOneField(HorarioSemanal, unique=True, on_delete=models.CASCADE, related_name="farmacia")
-    escala_plantao = models.ManyToManyField(EscalaPlantao, null=True, blank=True)
+    escala_plantao = models.ManyToManyField(EscalaPlantao)
 
     def __str__(self):
         return self.nome
