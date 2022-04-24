@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "64420957-d0a6-4c7a-b56b-09cf277b88e2",
+		"name": "API_BuscaFarma",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/v1/encontraFarma/farmacias",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3d03da4241289ac0869b35a6a2350cbdcba9fe73",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/encontraFarma/farmacias/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"encontraFarma",
+						"farmacias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/encontraFarma/farmacias-abertas/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3d03da4241289ac0869b35a6a2350cbdcba9fe73",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/encontraFarma/farmacias-abertas/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"encontraFarma",
+						"farmacias-abertas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/encontraFarma/farmacias-plantao-hoje",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3d03da4241289ac0869b35a6a2350cbdcba9fe73",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/encontraFarma/farmacias-plantao-hoje",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"encontraFarma",
+						"farmacias-plantao-hoje"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/encontraFarma/farmacias-plantao-por-data?data=2022-00-00",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3d03da4241289ac0869b35a6a2350cbdcba9fe73",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/encontraFarma/farmacias-plantao-por-data?data=2022-04-24",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"encontraFarma",
+						"farmacias-plantao-por-data"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "2022-04-24"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/encontraFarma/data-hora-servidor",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3d03da4241289ac0869b35a6a2350cbdcba9fe73",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/encontraFarma/data-hora-servidor",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"encontraFarma",
+						"data-hora-servidor"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8000",
+			"type": "default"
+		}
+	]
+}
