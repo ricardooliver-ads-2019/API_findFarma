@@ -12,9 +12,6 @@ class FarmaciasViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Farmacia.objects.all()
     serializer_class = FarmaciaSerializer
 
-    def list(self):
-        pass
-
 
 class FarmaciasAbertasViewSet(viewsets.ReadOnlyModelViewSet):    
     queryset = Farmacia.objects.all()
