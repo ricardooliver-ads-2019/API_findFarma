@@ -28,32 +28,6 @@ class HorarioSemanalSerializer(serializers.ModelSerializer):
         )
 
 
-class FarmaciaSerializer(serializers.ModelSerializer):   
-
-    horario_semanal = HorarioSemanalSerializer()
-
-    class Meta:
-        model = Farmacia
-        fields = (
-            'id', 
-            'nome', 
-            'razao_social', 
-            'cnpj', 
-            'whatsapp', 
-            'telefone', 
-            'email', 
-            'plantonista', 
-            'url_image',
-            'cep',
-            'rua',
-            'numero',
-            'bairro',
-            'cidade',
-            'uf',
-            'horario_semanal',
-        )
-
-
 class EscalaPlantaoSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -65,9 +39,9 @@ class EscalaPlantaoSerializer(serializers.ModelSerializer):
         )
 
 
+class FarmaciaSerializer(serializers.ModelSerializer):   
 
-class FarmaciaPlatonistaSerializer(serializers.ModelSerializer):   
-
+    horario_semanal = HorarioSemanalSerializer()
     escala_plantao = EscalaPlantaoSerializer(many=True)
 
     class Meta:
@@ -88,5 +62,34 @@ class FarmaciaPlatonistaSerializer(serializers.ModelSerializer):
             'bairro',
             'cidade',
             'uf',
-            'escala_plantao'                    
+            'horario_semanal',
+            'escala_plantao'
+        )
+
+
+class FarmaciaPlatonistaSerializer(serializers.ModelSerializer):   
+
+    horario_semanal = HorarioSemanalSerializer()
+    escala_plantao = EscalaPlantaoSerializer(many=True)
+
+    class Meta:
+        model = Farmacia
+        fields = (
+            'id', 
+            'nome', 
+            'razao_social', 
+            'cnpj', 
+            'whatsapp', 
+            'telefone', 
+            'email', 
+            'plantonista', 
+            'url_image',
+            'cep',
+            'rua',
+            'numero',
+            'bairro',
+            'cidade',
+            'uf',
+            'horario_semanal',
+            'escala_plantao',                                
         )        
