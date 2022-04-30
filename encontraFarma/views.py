@@ -6,43 +6,71 @@ import io
 from datetime import datetime
 
 from encontraFarma.models import Farmacia, EscalaPlantao
-from .serializer import FarmaciaSerializer, FarmaciaPlatonistaSerializer
+from .serializer import FarmaciaSerializer, FarmaciasPlantaoSerializer
+from .repository import busca_farmacias_plantao_agora
 
 class FarmaciasViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Farmacia.objects.all()
     serializer_class = FarmaciaSerializer
 
 
-class FarmaciasAbertasViewSet(viewsets.ReadOnlyModelViewSet):    
-    queryset = Farmacia.objects.all()
-    serializer_class = FarmaciaSerializer
-    
-    def list(self, request): 
-        lista_de_farmacias = Farmacia.busca_farmacias_abertas()        
+class BuscaFarmaciasPlantaoAgoraViewSet(viewsets.ReadOnlyModelViewSet):    
+    serializer_class = FarmaciasPlantaoSerializer    
+
+    def get_queryset(self):
+        pass
+
+    def list(self, request):
+        lista_de_farmacias = busca_farmacias_plantao_agora()
+
+        print(lista_de_farmacias)
 
         serializer = self.get_serializer(lista_de_farmacias, many=True)
+        
         return Response(serializer.data)      
 
 
-class FarmaciasPlantaoHojeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = EscalaPlantao.objects.all()
-    serializer_class = FarmaciaPlatonistaSerializer
+# class FarmaciasAbertasHorarioComercialViewSet(viewsets.ReadOnlyModelViewSet):
+#     serializer_class = FarmaciaSerializer
+    
+#     def list(self, request):       
+                        
+#         lista_de_farmacias = busca_farmacias_abertas_horario_comercial()      
 
-    def list(self, request):
-        lista_de_farmacias = EscalaPlantao.busca_farmacias_plantao_hoje()
+#         serializer = self.get_serializer(lista_de_farmacias, many=True)
+        
+#         return Response(serializer.data)      
 
-        serializer = self.get_serializer(lista_de_farmacias, many=True)
-        return Response(serializer.data)    
+# class FarmaciasAbertasViewSet(viewsets.ReadOnlyModelViewSet):    
+#     queryset = Farmacia.objects.all()
+#     serializer_class = FarmaciaSerializer
+    
+#     def list(self, request): 
+#         lista_de_farmacias = Farmacia.busca_farmacias_abertas()        
 
-class FarmaciasPlantaoPorDataRecebida(viewsets.ReadOnlyModelViewSet):
-    serializer_class = FarmaciaPlatonistaSerializer
+#         serializer = self.get_serializer(lista_de_farmacias, many=True)
+#         return Response(serializer.data)      
 
-    def list(self, request):
-        data = request.query_params["data"]                
-        lista_de_farmacias = EscalaPlantao.busca_farmacias_plantao_por_data_recebida(data_recebida=data)
 
-        serializer = self.get_serializer(lista_de_farmacias, many=True)
-        return Response(serializer.data)   
+# class FarmaciasPlantaoHojeViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = EscalaPlantao.objects.all()
+#     serializer_class = FarmaciaPlatonistaSerializer
+
+#     def list(self, request):
+#         lista_de_farmacias = EscalaPlantao.busca_farmacias_plantao_hoje()
+
+#         serializer = self.get_serializer(lista_de_farmacias, many=True)
+#         return Response(serializer.data)    
+
+# class FarmaciasPlantaoPorDataRecebida(viewsets.ReadOnlyModelViewSet):
+#     serializer_class = FarmaciaPlatonistaSerializer
+
+#     def list(self, request):
+#         data = request.query_params["data"]                
+#         lista_de_farmacias = EscalaPlantao.busca_farmacias_plantao_por_data_recebida(data_recebida=data)
+
+#         serializer = self.get_serializer(lista_de_farmacias, many=True)
+#         return Response(serializer.data)   
 
 
 class DataHoraServidorViewSet(viewsets.ReadOnlyModelViewSet):
