@@ -1,13 +1,7 @@
 from django.contrib import admin
 
 from .forms import PessoaFormAdmin
-from .models import Farmacia, HorarioSemanal, EscalaPlantao
-
-
-@admin.register(HorarioSemanal)
-class HorariosSemanalAdmin(admin.ModelAdmin):
-    model = HorarioSemanal
-    list_display = ('id', 'farmacia')
+from .models import Farmacia, EscalaPlantao
 
 
 @admin.register(Farmacia)
@@ -28,7 +22,6 @@ class FarmaciasAdmin(admin.ModelAdmin):
         'whatsapp',
         'url_image', 
         'responsavel', 
-        'horario_semanal'
     )
 
 
