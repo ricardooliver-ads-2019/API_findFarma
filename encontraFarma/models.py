@@ -1,29 +1,5 @@
 from django.db import models
 
-    # def busca_farmacias_plantao_hoje():
-    #     data_hora_atual = datetime.now().strftime("%G-%m-%d %X")
-        
-    #     query = f'SELECT * FROM encontraFarma_escalaplantao WHERE "{data_hora_atual}" >= data_hora_inicio_plantao AND "{data_hora_atual}" <= data_hora_final_plantao'
-        
-    #     farmacias = HorarioSemanal.objects.raw(query)
-        
-    #     lista_de_farmacias = []
-    #     for f in farmacias:
-    #         lista_de_farmacias.append(f.farmacia)
-
-    #     return lista_de_farmacias
-
-    # def busca_farmacias_plantao_por_data_recebida(data_recebida):        
-    #     query = f'SELECT * FROM encontraFarma_escalaplantao WHERE "{data_recebida}" >= DATE(data_hora_inicio_plantao) AND "{data_recebida}" <= DATE(data_hora_final_plantao)'
-     
-    #     farmacias = HorarioSemanal.objects.raw(query)
-        
-    #     lista_de_farmacias = []
-    #     for f in farmacias:
-    #         lista_de_farmacias.append(f.farmacia)
-
-    #     return lista_de_farmacias
-
 
 class Farmacia(models.Model):
     nome = models.CharField(max_length=60)
@@ -60,20 +36,6 @@ class Farmacia(models.Model):
     
     def __str__(self):
         return self.nome
-
-
-#     def busca_farmacias_abertas():
-#         nome_dia_semana = datetime.now().strftime("%A")
-#         hora_atual = datetime.now().strftime("%X")
-                
-#         query = retorna_query_busca_farmacia_dia_semana(nome_dia_semana, hora_atual)
-#         farmacias = HorarioSemanal.objects.raw(query)
-        
-#         lista_de_farmacias = []
-#         for f in farmacias:
-#             lista_de_farmacias.append(f.farmacia)
-
-#         return lista_de_farmacias
 
     
 class EscalaPlantao(models.Model):

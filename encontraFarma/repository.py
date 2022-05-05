@@ -1,5 +1,4 @@
 from datetime import datetime
-from django.db import connection
 from .models import EscalaPlantao, Farmacia
 
 def busca_farmacias_plantao_agora():   
@@ -84,25 +83,3 @@ def retorna_dia_semana_tabela_farmacia(nome_dia_semana):
         horario["fechamento"] = "sabado_horario_fechamento"
 
     return horario
-
-
-    # rows = None
-    # with connection.cursor() as cursor:
-    #     cursor.execute(f"""
-    #         SELECT * FROM encontraFarma_farmacia INNER JOIN encontraFarma_escalaplantao ON 
-    #         encontraFarma_farmacia.id = encontraFarma_escalaplantao.farmacia_id 
-    #         WHERE ("{data_hora_atual}" >= encontraFarma_escalaplantao.data_hora_inicio_plantao AND 
-    #         "{data_hora_atual}" <= encontraFarma_escalaplantao.data_hora_final_plantao)"""
-    #     )        
-    #     rows = dictfetchall(cursor)        
-    
-    # return rows
-
-
-# def dictfetchall(cursor):
-#     "Return all rows from a cursor as a dict"
-#     columns = [col[0] for col in cursor.description]
-#     return [
-#         dict(zip(columns, row))
-#         for row in cursor.fetchall()
-#     ]

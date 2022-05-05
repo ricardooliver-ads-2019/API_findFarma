@@ -1,4 +1,3 @@
-from dataclasses import field
 from rest_framework import serializers
 from .models import Farmacia, EscalaPlantao
 
@@ -62,29 +61,3 @@ class FarmaciasPlantaoSerializer(serializers.ModelSerializer):
             'data_hora_final_plantao',  
             'farmacia'                        
         )
-
-# class FarmaciaPlatonistaSerializer(serializers.ModelSerializer):   
-
-#     escala_plantao = EscalaPlantaoSerializer(many=True)
-
-#     class Meta:
-#         model = Farmacia
-#         fields = (
-#             'id', 
-#             'nome', 
-#             'razao_social', 
-#             'cnpj', 
-#             'whatsapp', 
-#             'telefone', 
-#             'email', 
-#             'plantonista', 
-#             'url_image',
-#             'cep',
-#             'rua',
-#             'numero',
-#             'bairro',
-#             'cidade',
-#             'uf',
-#             'horario_semanal',
-#             'escala_plantao',                                
-#         )        
