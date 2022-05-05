@@ -51,9 +51,9 @@ class BuscaEscalaFarmaciaPlantaoViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=True, methods=["get"])
     def farmacia_plantao(self, request, pk=None):
         
-        data_hora_atual = datetime.now().strftime("%G-%m-%d %X")
+        data_atual = datetime.now().strftime("%G-%m-%d")
         
-        escala = EscalaPlantao.objects.filter(farmacia=pk, data_hora_inicio_plantao__gte=data_hora_atual)
+        escala = EscalaPlantao.objects.filter(farmacia=pk, data_hora_inicio_plantao__date__gte=data_atual)
         serializer = self.get_serializer(escala, many=True)
 
         return Response(serializer.data)
