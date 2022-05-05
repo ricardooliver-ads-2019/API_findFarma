@@ -4,10 +4,12 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 import io
 from datetime import datetime
+from rest_framework.decorators import action
 
 from encontraFarma.models import Farmacia, EscalaPlantao
-from .serializer import FarmaciaSerializer, FarmaciasPlantaoSerializer
+from .serializer import EscalaPlantaoSerializer, FarmaciaSerializer, FarmaciasPlantaoSerializer
 from .repository import busca_farmacias_plantao_agora, busca_farmacias_horario_comercial_agora
+from encontraFarma import serializer
 
 class FarmaciasViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Farmacia.objects.all()
@@ -37,11 +39,24 @@ class BuscaFarmaciasHorarioComercialAgoraViewSet(viewsets.ReadOnlyModelViewSet):
     def list(self, request):                               
         lista_de_farmacias = busca_farmacias_horario_comercial_agora()      
 
-        print(lista_de_farmacias)
-
         serializer = self.get_serializer(lista_de_farmacias, many=True)
         
         return Response(serializer.data)      
+
+
+class BuscaEscalaFarmaciaPlantaoViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = EscalaPlantao.objects.all()
+    serializer_class = EscalaPlantaoSerializer
+
+    @action(detail=True, methods=["get"])
+    def farmacia_plantao(self, request, pk=None):
+        
+        data_hora_atual = datetime.now().strftime("%G-%m-%d %X")
+        
+        escala = EscalaPlantao.objects.filter(farmacia=pk, data_hora_inicio_plantao__gt=data_hora_atual)
+        serializer = self.get_serializer(escala, many=True)
+
+        return Response(serializer.data)
 
 # class FarmaciasAbertasViewSet(viewsets.ReadOnlyModelViewSet):    
 #     queryset = Farmacia.objects.all()
